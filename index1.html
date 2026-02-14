@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Mahashivratri 🌙🕉️</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at center, #000000, #1a1a1a);
+  color: #fff;
+}
+
+/* Shiva background image */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://cdna.artstation.com/p/assets/images/images/066/565/176/large/creper-lord-shiva-meditating-in-snow-on-mountain-centered-symmetry-painted-intricate-volumetric-lighti-446966241.jpg?1693230138') center/cover no-repeat;
+  opacity: 0.08; /* subtle transparent background */
+  z-index: 0;
+}
+
+/* Canvas for sparkles/icons */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Popup box styling */
+.box {
+  background: rgba(0,0,0,0.85);
+  padding: 40px 20px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255,255,255,0.4);
+  position: relative;
+  box-sizing: border-box;
+  z-index: 2; /* above canvas & background */
+}
+
+h2 { color: #ffcc00; letter-spacing: 1px; }
+.message { font-size: 18px; margin: 20px 0; color: #ffe066; }
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  background: linear-gradient(45deg, #ffcc00, #ff9900);
+  color: #000;
+}
+button:hover { transform: scale(1.05); }
+
+.backArrow {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  color: #ffcc00;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.backArrow:hover { transform: scale(1.2); }
+
+@media (max-width: 500px) {
+  .message { font-size: 16px; }
+  button { font-size: 14px; padding: 8px 16px; }
+  .backArrow { font-size: 20px; top: 10px; left: 10px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Step 1 -->
+<div class="box" id="step1">
+  <h2>🌙 Happy Mahashivratri 🌙</h2>
+  <p class="message">May Lord Shiva bless you with health, happiness, and success! 🕉️</p>
+  <button onclick="nextStep2()">Continue</button>
+</div>
+
+<!-- Step 2 -->
+<div class="box" id="step2" style="display:none;">
+  <a class="backArrow" onclick="backToStep1()">←</a>
+  <p class="message">This Mahashivratri night is special, let’s celebrate and feel the blessings of Lord Shiva 🌌🕉️</p>
+  <button onclick="nextStep3()">Continue</button>
+</div>
+
+<!-- Step 3 -->
+<div class="box" id="step3" style="display:none;">
+  <a class="backArrow" onclick="backToStep2()">←</a>
+  <p class="message">Light a diya 🪔, offer prayers, and chant Om Namah Shivaya 🕉️</p>
+  <button onclick="nextStep4()">Continue</button>
+</div>
+
+<!-- Step 4 -->
+<div class="box" id="step4" style="display:none;">
+  <a class="backArrow" onclick="backToStep3()">←</a>
+  <p class="message">Do you want to receive a special Shiva blessing? 🙏</p>
+  <button onclick="yesBlessing()">Yes, please 💖</button>
+  <button onclick="noBlessing()">Tell me something new 🕉️</button>
+</div>
+
+<!-- Step 5 -->
+<div class="box" id="step5" style="display:none;">
+  <a class="backArrow" onclick="backToStep4()">←</a>
+  <p class="message" id="finalMessage"></p>
+</div>
+
+<script>
+// Navigation
+function nextStep2() { document.getElementById("step1").style.display = "none"; document.getElementById("step2").style.display = "block"; }
+function backToStep1() { document.getElementById("step2").style.display = "none"; document.getElementById("step1").style.display = "block"; }
+function nextStep3() { document.getElementById("step2").style.display = "none"; document.getElementById("step3").style.display = "block"; }
+function backToStep2() { document.getElementById("step3").style.display = "none"; document.getElementById("step2").style.display = "block"; }
+function nextStep4() { document.getElementById("step3").style.display = "none"; document.getElementById("step4").style.display = "block"; }
+function backToStep3() { document.getElementById("step4").style.display = "none"; document.getElementById("step3").style.display = "block"; }
+function yesBlessing() { document.getElementById("step4").style.display = "none"; document.getElementById("step5").style.display = "block"; document.getElementById("finalMessage").innerText = "May Lord Shiva shower his blessings on you today and always! 🌙🕉️✨"; }
+function noBlessing() { document.getElementById("step4").style.display = "none"; document.getElementById("step5").style.display = "block"; document.getElementById("finalMessage").innerText = "Even if you don’t know, remember Shiva is always watching over you 🕉️💖"; }
+function backToStep4() { document.getElementById("step5").style.display = "none"; document.getElementById("step4").style.display = "block"; }
+
+// Sparkling particles with Shiva icons
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+const icons = ["🔱","🕉️","⚡","🪔"]; // Shiva-related symbols
+
+for(let i=0;i<120;i++){
+  particles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    size: Math.random()*2+1,
+    speedY: Math.random()*0.5+0.2,
+    symbol: icons[Math.floor(Math.random()*icons.length)],
+    color: `hsl(${Math.random()*50+40}, 100%, 60%)`,
+    fontSize: Math.random()*20+10
+  });
+}
+
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.font = `${p.fontSize}px Arial`;
+    ctx.fillStyle = p.color;
+    ctx.fillText(p.symbol, p.x, p.y);
+    p.y -= p.speedY;
+    if(p.y < -20) { 
+      p.y = canvas.height + 20; 
+      p.x = Math.random()*canvas.width; 
+      p.symbol = icons[Math.floor(Math.random()*icons.length)];
+    }
+  });
+  requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
